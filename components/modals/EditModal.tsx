@@ -14,7 +14,7 @@ import ImageUpload from "../ImageUpload";
 
 const EditModal = () => {
     const { data: currentUser } = useCurrentUser();
-    const { mutate: mutateFetchedUser} = useUser(currentUser?.id);
+    const { mutate: mutateFetchedUser } = useUser(currentUser?.id || '');
     const editModal = useEditModal();
 
     const [ name, setName ] = useState('');
@@ -24,11 +24,11 @@ const EditModal = () => {
     const [ coverImage, setCoverImage ] = useState('');
 
     useEffect(() => {
-        setName(currentUser?.name || '')
-        setUsername(currentUser?.username || '')
-        setBio(currentUser?.bio || '')
-        setProfileImage(currentUser?.profileImage || '')
-        setCoverImage(currentUser?.coverImage || '')
+        setName(currentUser?.name || '');
+        setUsername(currentUser?.username || '');
+        setBio(currentUser?.bio || '');
+        setProfileImage(currentUser?.profileImage || '');
+        setCoverImage(currentUser?.coverImage || '');
     },[
         currentUser?.name,
         currentUser?.username,

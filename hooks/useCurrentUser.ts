@@ -7,6 +7,16 @@ interface User {
     name: string;
     username?: string;
     email?: string;
+    bio?: string;
+    profileImage?: string;
+    coverImage?: string;
+    emailVerified?: string;
+    image?: string;
+    hashedPassword: string;
+    createdAt: string;
+    updatedAt: string;
+    followingIds: string[];
+    hasNotifications?: boolean;
 }
 
 const useCurrentUser = () => {
