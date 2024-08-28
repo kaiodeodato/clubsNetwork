@@ -42,7 +42,10 @@ const LoginModal = () => {
     },[loginModal, email, password])
 
     const bodyContent = (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col justify-center gap-4">
+            <span className="text-sm text-red-400 flex justify-center items-center blink">
+            Notice: Database is reset daily at <br/> 10:00 GMT for security reasons.
+            </span>
             <Input 
                 placeholder="Emal" 
                 onChange={(e)=> setEmail(e.target.value)} 

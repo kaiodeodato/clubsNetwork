@@ -1,15 +1,29 @@
+import { useSession } from 'next-auth/react';
 import useSWR from 'swr';
 import fetcher from '@/libs/fetcher';
 
-const useCurrentUser = () => {
-    const { data, error, isLoading, mutate} = useSWR('/api/current', fetcher);
+interface User {
+    id: string;
+    name: string;
+    username?: string;
+    email?: string;
+}
 
-    return{
+const useCurrentUser = () => {
+    const { data: session, status } = useSession();
+    const isAuthenticated = status === 'authenticated';
+
+    const { data, error, isLoading, mutate } = useSWR<User>(
+        isAuthenticated ? '/api/current' : null,
+        fetcher
+    );
+
+    return {
         data,
         error,
         isLoading,
         mutate
-    }
-}
+    };
+};
 
 export default useCurrentUser;
