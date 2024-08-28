@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import { GetServerSidePropsContext } from "next";
 
 import NotificationsFeed from "@/components/NotificationsFeed";
-import { authOptions } from "../pages/api/auth/[...nextauth]";
+import { authOptions } from "./api/auth/[...nextauth]";
 import Header from "@/components/Header";
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
