@@ -8,7 +8,7 @@ import usePost from "./usePost";
 import usePosts from "./usePosts";
 
 const useLike = ({ postId, userId } : { postId: string, userId?: string }) => {
-    const { data: currentUser } = useCurrentUser();
+    const { data: currentUser, mutate: mutateFetchedUser  } = useCurrentUser();
     const { data: fetchedPost, mutate: mutateFetchedPost } = usePost(postId); 
     const { mutate: mutateFetchedPosts } = usePosts(userId);
 
@@ -36,6 +36,7 @@ const useLike = ({ postId, userId } : { postId: string, userId?: string }) => {
             }
 
             await request();
+            mutateFetchedUser();
             mutateFetchedPost();
             mutateFetchedPosts();
 

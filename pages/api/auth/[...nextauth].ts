@@ -5,6 +5,8 @@ import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import bcrypt from 'bcrypt';
 
 import prisma from '@/libs/prismadb';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/router';
 
 export const authOptions: NextAuthOptions = {
     adapter: PrismaAdapter(prisma),
@@ -17,6 +19,7 @@ export const authOptions: NextAuthOptions = {
             },
             async authorize(credentials) {
                 if (!credentials?.email || !credentials?.password) {
+                    toast.error('Invalid credentials');
                     throw new Error('Invalid credentials');
                 }
 

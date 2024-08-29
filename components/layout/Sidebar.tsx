@@ -8,9 +8,10 @@ import useCurrentUser from '@/hooks/useCurrentUser';
 import SidebarLogo from './SidebarLogo';
 import SidebarItem from './SidebarItem';
 import SidebarTweetButton from './SidebarTweetButton';
+import { useEffect } from 'react';
 
 const Sidebar = () => {
-    const { data: currentUser } = useCurrentUser();
+    const { data: currentUser, mutate  } = useCurrentUser();
     const items = [
         {
             label: 'Home',
@@ -31,6 +32,12 @@ const Sidebar = () => {
             auth: true
         }
     ];
+
+    useEffect(() => {
+        if (currentUser) {
+            mutate();
+        }
+    }, [currentUser?.hasNotifications, mutate]);
 
     return (
         <div className="col-span-1 h-full pr-4 md:pr-6">

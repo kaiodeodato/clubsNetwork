@@ -1,10 +1,11 @@
 import { useRouter } from 'next/router';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { IconType } from 'react-icons';
 import { BsDot } from 'react-icons/bs';
 
 import useLoginModal from '@/hooks/useLoginModal';
 import useCurrentUser from '@/hooks/useCurrentUser';
+import useNotifications from '@/hooks/useNotifications';
 
 interface SidebarItemProps {
     label: string;
@@ -24,7 +25,8 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
     alert
 }) => {
     const loginModal = useLoginModal();
-    const {data: currentUser } = useCurrentUser();
+    const {data: currentUser, mutate } = useCurrentUser();
+    const { mutate: mutateNotifications } = useNotifications();
     const router = useRouter();
     
     const handleClick = useCallback(()=> {
@@ -35,9 +37,18 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
             loginModal.onOpen();
         }else if(href){
             router.push(href);
+            mutate();
+            mutateNotifications();
         }
 
-    },[router, onClick, href, currentUser, auth, loginModal])
+    },[router, onClick, href, currentUser, auth, loginModal, mutate])
+
+    useEffect(() => {
+        if (currentUser) {
+            mutate();
+        }
+    }, [alert, mutate]);
+
 
     return ( 
         <div onClick={handleClick} className='flex flex-row items-center justify-start'>
